@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-primary: #ec5b13;
+  --color-primary-dark: #d64e0f;
+  --color-navy-dark: #0f172a;
+  --color-navy-muted: #1e293b;
+  --color-background-light: #f8f6f6;
+
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+:root {
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.145 0 0);
+  --primary: #ec5b13;
+  --primary-foreground: oklch(1 0 0);
+  --border: oklch(0.922 0 0);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-slate-200;
+  }
+  body {
+    @apply bg-background-light text-slate-900 font-sans;
+  }
+}
