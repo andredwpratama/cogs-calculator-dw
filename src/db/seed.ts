@@ -1,6 +1,9 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
 import { projects, costItems } from "./schema";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 async function seed() {
   const connectionString = process.env.DATABASE_URL;
@@ -8,9 +11,8 @@ async function seed() {
     throw new Error("DATABASE_URL environment variable is not set");
   }
 
-  // Use a dedicated connection for seeding (not the app's shared pool)
-  const client = postgres(connectionString, { max: 1 });
-  const db = drizzle(client);
+  const sql = neon(connectionString);
+  const db = drizzle(sql);
 
   console.log("Seeding database...");
 
@@ -52,9 +54,6 @@ async function seed() {
   ]);
 
   console.log("Seed complete!");
-
-  // Close the connection
-  await client.end();
   process.exit(0);
 }
 
