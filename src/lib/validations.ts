@@ -11,5 +11,5 @@ export const costItemSchema = z.object({
   type: z.enum(["local_purchase", "consumable", "service", "labor", "material"]),
   quantity: z.number().min(0),
   unitPrice: z.number().min(0),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });

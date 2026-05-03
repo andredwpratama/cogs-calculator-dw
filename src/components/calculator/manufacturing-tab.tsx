@@ -50,9 +50,10 @@ export function ManufacturingTab({ materialItems, manufacturingItems, onUpdate }
     onUpdate(newItems);
   };
 
-  const getVal = (materialId: string, process: string) => {
+  const getVal = (materialId: string, process: string): number => {
     const item = manufacturingItems.find((i) => i.metadata?.materialId === materialId);
-    return item?.metadata?.[process] || 0;
+    const val = item?.metadata?.[process];
+    return typeof val === "number" ? val : 0;
   };
 
   const totalCost = manufacturingItems.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);

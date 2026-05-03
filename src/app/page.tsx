@@ -5,6 +5,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { DeleteProjectButton } from "@/components/ui/delete-project-button";
 
+export const dynamic = "force-dynamic";
+
 export default async function Dashboard() {
   const projects = await getProjects();
 

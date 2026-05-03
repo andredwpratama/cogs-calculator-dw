@@ -1,7 +1,17 @@
-import { db } from "./index";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { projects, costItems } from "./schema";
 
 async function seed() {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL environment variable is not set");
+  }
+
+  // Use a dedicated connection for seeding (not the app's shared pool)
+  const client = postgres(connectionString, { max: 1 });
+  const db = drizzle(client);
+
   console.log("Seeding database...");
 
   const projectId = crypto.randomUUID();
@@ -42,6 +52,13 @@ async function seed() {
   ]);
 
   console.log("Seed complete!");
+
+  // Close the connection
+  await client.end();
+  process.exit(0);
 }
 
-seed().catch(console.error);
+seed().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

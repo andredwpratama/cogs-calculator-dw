@@ -1,15 +1,15 @@
-import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import { pgTable, text, doublePrecision, timestamp, jsonb } from "drizzle-orm/pg-core";
 
-export const projects = sqliteTable("projects", {
+export const projects = pgTable("projects", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
-  overheadPercent: real("overhead_percent").default(10).notNull(),
-  gpPercent: real("gp_percent").default(15).notNull(),
-  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+  overheadPercent: doublePrecision("overhead_percent").default(10).notNull(),
+  gpPercent: doublePrecision("gp_percent").default(15).notNull(),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
 });
 
-export const costItems = sqliteTable("cost_items", {
+export const costItems = pgTable("cost_items", {
   id: text("id").primaryKey(),
   projectId: text("project_id")
     .notNull()
@@ -17,7 +17,7 @@ export const costItems = sqliteTable("cost_items", {
   type: text("type").notNull(), // local_purchase, material, labor, etc.
   description: text("description").notNull(),
   partNumber: text("part_number"),
-  quantity: real("quantity").notNull().default(1),
-  unitPrice: real("unit_price").notNull().default(0),
-  metadata: text("metadata", { mode: "json" }), // Stores shape, dimensions, processes, etc.
+  quantity: doublePrecision("quantity").notNull().default(1),
+  unitPrice: doublePrecision("unit_price").notNull().default(0),
+  metadata: jsonb("metadata"), // Stores shape, dimensions, processes, etc.
 });

@@ -90,7 +90,7 @@ export function MaterialTab({ items, activeItemId, onActiveItemChange, onUpdate,
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Shape Profile</label>
-              <Select value={shape} onValueChange={(v: MaterialShape) => setShape(v)}>
+              <Select value={shape} onValueChange={(v) => v && setShape(v as MaterialShape)}>
                 <SelectTrigger className="h-11 bg-white text-sm">
                   <SelectValue />
                 </SelectTrigger>
@@ -106,7 +106,7 @@ export function MaterialTab({ items, activeItemId, onActiveItemChange, onUpdate,
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Material Grade</label>
-              <Select value={gradeId} onValueChange={setGradeId}>
+              <Select value={gradeId} onValueChange={(v) => v && setGradeId(v)}>
                 <SelectTrigger className="h-11 bg-white text-sm">
                   <SelectValue />
                 </SelectTrigger>
